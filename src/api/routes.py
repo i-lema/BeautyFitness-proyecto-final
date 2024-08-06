@@ -45,6 +45,28 @@ def login():
     else:
         return jsonify({"msg": "Wrong user or password"}), 401
         
+# @api.route('/user/<int:user_id>', methods=['PUT'])
+# @jwt_required()
+# def update_user(user_id):
+#     body = request.json
+#     user = User.query.get(user_id)
+
+#     if not user:
+#         return jsonify({"msg": "User not found"}), 404
+
+#     # Update the user's data with the new values
+#     if 'birth_date' in body:
+#         user.birth_date = datetime.strptime(body['birth_date'], '%Y-%m-%d').date()
+#     if 'gender' in body:
+#         user.gender = body['gender']
+#     if 'weight' in body:
+#         user.weight = body['weight']
+#     if 'height' in body:
+#         user.height = body['height']
+
+#     db.session.commit()
+#     return jsonify({"msg": "User updated"}), 200
+
 @api.route('/user/<int:user_id>', methods=['PUT'])
 @jwt_required()
 def update_user(user_id):
@@ -55,6 +77,12 @@ def update_user(user_id):
         return jsonify({"msg": "User not found"}), 404
 
     # Update the user's data with the new values
+    if 'name' in body:
+        user.name = body['name']
+    if 'surname' in body:
+        user.surname = body['surname']
+    if 'username' in body:
+        user.username = body['username']
     if 'birth_date' in body:
         user.birth_date = datetime.strptime(body['birth_date'], '%Y-%m-%d').date()
     if 'gender' in body:
@@ -66,6 +94,7 @@ def update_user(user_id):
 
     db.session.commit()
     return jsonify({"msg": "User updated"}), 200
+
 
 # @api.route('/recommend_routine', methods=['POST'])
 # @jwt_required()
@@ -193,6 +222,11 @@ def delete_training_days(id):
     db.session.commit()
     return jsonify({"message": "Training days deleted successfully"}), 200
 
+@api.route('/user/<int:user_id>', methods=['GET'])
+@jwt_required()
+def get_user_profile(user_id):
+    user = User.query.get_or_404(user_id)
+    return jsonify(user.serialize()), 200
 
 
 

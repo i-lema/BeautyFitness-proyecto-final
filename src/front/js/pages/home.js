@@ -40,9 +40,11 @@ export const Home = () => {
               </h1>
             </div>
             <div className="col homeClick m-2">
-              <h1 className="text-dark text-center display-4 fw-semibold">
-                Exercises
-              </h1>
+              <Link to="/profile">
+                <h1 className="text-dark text-center display-4 fw-semibold">
+                  Profile
+                </h1>
+              </Link>
             </div>
             <div className="col homeClick m-2">
               <h1 className="text-dark text-center display-4 fw-semibold">

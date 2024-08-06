@@ -101,13 +101,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			// Obtener token y usuario de localStorage y actualizar store
 			// Obtener token y usuario de localStorage y actualizar store
+			// syncTokenFromLocalStorage: () => {
+			// 	const token = localStorage.getItem("token");
+			// 	const user = JSON.parse(localStorage.getItem("user"));
+			// 	if (token && token != "" && token != "undefined") setStore({ token: token });
+			// 	if (user) setStore({ user: user });
+			// },
+
 			syncTokenFromLocalStorage: () => {
 				const token = localStorage.getItem("token");
 				const user = JSON.parse(localStorage.getItem("user"));
 				if (token && token != "" && token != "undefined") setStore({ token: token });
 				if (user) setStore({ user: user });
-			},
-						
+			},						
 
 			// Acción de inicio de sesión
 			login: async (email, password) => {
@@ -178,6 +184,52 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
+			// updateUser: async (updatedUserData) => {
+			// 	const store = getStore();
+			// 	if (!store.user || !store.token) {
+			// 		Swal.fire({
+			// 			icon: "error",
+			// 			title: "User not logged in",
+			// 			text: "Please log in first",
+			// 		});
+			// 		return;
+			// 	}
+				
+			// 	try {
+			// 		const response = await fetch(`https://congenial-robot-5gvv7jpgq7wvc7vx6-3001.app.github.dev/api/user/${store.user.id}`, {
+			// 			method: "PUT",
+			// 			headers: {
+			// 				"Content-Type": "application/json",
+			// 				"Authorization": `Bearer ${store.token}`
+			// 			},
+			// 			body: JSON.stringify(updatedUserData)
+			// 		});
+			
+			// 		if (!response.ok) {
+			// 			throw await response.json();
+			// 		}
+			
+			// 		const data = await response.json();
+			// 		Swal.fire({
+			// 			icon: "success",
+			// 			title: "Success!",
+			// 			text: data.msg,
+			// 		});
+					
+			// 		const updatedUser = { ...store.user, ...updatedUserData };
+			// 		setStore({ user: updatedUser });
+					
+			// 		return true;
+			// 	} catch (error) {
+			// 		Swal.fire({
+			// 			icon: "error",
+			// 			title: "Oops...",
+			// 			text: error.msg,
+			// 		});
+			// 		console.log(error);
+			// 	}
+			// },		
+			
 			updateUser: async (updatedUserData) => {
 				const store = getStore();
 				if (!store.user || !store.token) {
@@ -188,7 +240,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 					return;
 				}
-				
+			
 				try {
 					const response = await fetch(`https://congenial-robot-5gvv7jpgq7wvc7vx6-3001.app.github.dev/api/user/${store.user.id}`, {
 						method: "PUT",
@@ -209,10 +261,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 						title: "Success!",
 						text: data.msg,
 					});
-					
+			
 					const updatedUser = { ...store.user, ...updatedUserData };
 					setStore({ user: updatedUser });
-					
+			
 					return true;
 				} catch (error) {
 					Swal.fire({
@@ -222,7 +274,42 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 					console.log(error);
 				}
-			},			
+			},
+			
+			getUserProfile: async (userId) => {
+				const store = getStore();
+				if (!store.token) {
+					Swal.fire({
+						icon: "error",
+						title: "Not authenticated",
+						text: "Please log in first",
+					});
+					return;
+				}
+			
+				try {
+					const response = await fetch(`https://congenial-robot-5gvv7jpgq7wvc7vx6-3001.app.github.dev/api/user/${userId}`, {
+						method: "GET",
+						headers: {
+							"Authorization": `Bearer ${store.token}`
+						}
+					});
+			
+					if (!response.ok) {
+						throw await response.json();
+					}
+			
+					const data = await response.json();
+					return data;
+				} catch (error) {
+					Swal.fire({
+						icon: "error",
+						title: "Oops...",
+						text: error.msg,
+					});
+					console.log(error);
+				}
+			},
 			
 			logout: () => {
 				localStorage.removeItem('token');

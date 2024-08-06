@@ -16,7 +16,7 @@ import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { UpdateProfile } from "./pages/updateProfile";
 
-import Profile from"./pages/profile";
+import {Profile} from"./pages/profile";
 import {Single} from "./pages/single"; // Importa el componente Single
 import Workout from "./pages/workout"; // Importa el componente Workout
 import WorkoutList from "./pages/workoutList"; // Importa el componente WorkoutList
