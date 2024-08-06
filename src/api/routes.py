@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, ExperienceLevel
+from api.models import db, User, ExperienceLevel, TrainingDays
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token,get_jwt_identity,jwt_required
@@ -150,6 +150,48 @@ def goalsworkout():
 
     return jsonify(response_body), 200
 
+@api.route('/training_days', methods=['POST'])
+@jwt_required()
+def create_training_days():
+    user_id = get_jwt_identity()
+    data = request.get_json()
+    new_training_days = TrainingDays(
+        number_of_days=data['number_of_days'],
+        days=data['days'],
+        user_id=user_id
+    )
+    db.session.add(new_training_days)
+    db.session.commit()
+    return jsonify({"message": "Training days created successfully"}), 201
+
+@api.route('/training_days/<int:id>', methods=['GET'])
+@jwt_required()
+def get_training_days(id):
+    training_days = TrainingDays.query.get_or_404(id)
+    return jsonify({
+        "id": training_days.id,
+        "number_of_days": training_days.number_of_days,
+        "days": training_days.days,
+        "user_id": training_days.user_id
+    }), 200
+
+@api.route('/training_days/<int:id>', methods=['PUT'])
+@jwt_required()
+def update_training_days(id):
+    data = request.get_json()
+    training_days = TrainingDays.query.get_or_404(id)
+    training_days.number_of_days = data['number_of_days']
+    training_days.days = data['days']
+    db.session.commit()
+    return jsonify({"message": "Training days updated successfully"}), 200
+
+@api.route('/training_days/<int:id>', methods=['DELETE'])
+@jwt_required()
+def delete_training_days(id):
+    training_days = TrainingDays.query.get_or_404(id)
+    db.session.delete(training_days)
+    db.session.commit()
+    return jsonify({"message": "Training days deleted successfully"}), 200
 
 
 

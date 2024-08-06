@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
 import { Card } from "../component/Card";
+import TrainingDays from "./trainingDays";
+import RecommendedRoutine from "./recommendedRoutine";
 
 export const Home = () => {
     const { store, actions } = useContext(Context);
@@ -48,6 +50,8 @@ export const Home = () => {
               </h1>
             </div>
           </div>
+          <TrainingDays/>
+          <RecommendedRoutine/>
         </div>
       )}
       </div>

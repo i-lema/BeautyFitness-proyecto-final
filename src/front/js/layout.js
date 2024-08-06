@@ -22,7 +22,7 @@ import Workout from "./pages/workout"; // Importa el componente Workout
 import WorkoutList from "./pages/workoutList"; // Importa el componente WorkoutList
 import ProfileExperienceLevel from"./pages/profileExperienceLevel";
 import ProfileObjetive from "./pages/profileObjetive";
-import TrainingDays from "./pages/trainingDays";
+
 import Routine from "./pages/routine";
 import SuscriptionInfo from "./pages/suscriptionInfo";
 import VideoWorkout from "./pages/videoWorkout";
@@ -32,6 +32,7 @@ import { Exercices } from "./pages/exercices";
 import { ExercisesListPage } from "./pages/exerciseListPage";
 import { SingleExercisePage } from "./pages/singleExercisePage";
 import TrainingForm from "./pages/trainingForm";
+import TrainingDays from "./pages/trainingDays";
 
 //create your first component
 const Layout = () => {

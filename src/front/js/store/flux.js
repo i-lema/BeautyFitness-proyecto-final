@@ -8,6 +8,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			message: null,
 			user: null,
 			exercises: [],
+			trainingDays: null,
+            recommendedRoutine: null,
 			demo: [
 				{
 					title: "FIRST",
@@ -31,7 +33,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// Función para cargar los niveles de experiencia desde el backend
 			fetchExperienceLevels : async () => {
 				try {
-				  const response = await fetch('https://didactic-winner-x5rrg7q5wjxjhpj44-3001.app.github.dev/api/experience_levels')
+				  const response = await fetch('https://congenial-robot-5gvv7jpgq7wvc7vx6-3001.app.github.dev/api/experience_levels')
 				  if (!response.ok) throw new Error('Error fetching experience levels');
 				  const data = await response.json();
 				  setStore({ experienceLevels: data });
@@ -39,6 +41,63 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  console.error('Error fetching experience levels:', error);
 			  }
 			},
+
+			setTrainingDays: async (days) => {
+                const store = getStore();
+                setStore({ trainingDays: days });
+                await getActions().recommendRoutine(days);
+
+                // Actualizar los días de entrenamiento en el backend
+                if (store.user && store.token) {
+                    try {
+                        const response = await fetch(`https://congenial-robot-5gvv7jpgq7wvc7vx6-3001.app.github.dev/api/user/${store.user.id}`, {
+                            method: "PUT",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "Authorization": `Bearer ${store.token}`
+                            },
+                            body: JSON.stringify({ trainingDays: days })
+                        });
+
+                        if (!response.ok) {
+                            throw await response.json();
+                        }
+
+                        const data = await response.json();
+                        const updatedUser = { ...store.user, trainingDays: days };
+                        setStore({ user: updatedUser });
+                        Swal.fire({
+                            icon: "success",
+                            title: "Success!",
+                            text: data.msg,
+                        });
+                    } catch (error) {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: error.msg || "Error updating training days",
+                        });
+                        console.log(error);
+                    }
+                }
+            },
+
+            recommendRoutine: (days) => {
+                let routine;
+                if (days === 2 || days === 3) {
+                    routine = "Full-body";
+                } else if (days === 4 || days === 5) {
+                    routine = "Push-Pull, Torso-Pierna o Weider";
+                } else {
+                    routine = "No se puede recomendar una rutina con el número de días proporcionado";
+                }
+                setStore({ recommendedRoutine: routine });
+                Swal.fire({
+                    icon: "info",
+                    title: "Recomendación de Rutina",
+                    text: `Recomendamos una rutina: ${routine}`,
+                });
+            },
 
 			// Obtener token y usuario de localStorage y actualizar store
 			// Obtener token y usuario de localStorage y actualizar store
@@ -53,7 +112,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// Acción de inicio de sesión
 			login: async (email, password) => {
 				try {
-					const response = await fetch("https://didactic-winner-x5rrg7q5wjxjhpj44-3001.app.github.dev/api/login", {
+					const response = await fetch("https://congenial-robot-5gvv7jpgq7wvc7vx6-3001.app.github.dev/api/login", {
 						method: "POST",
 						headers: {
 							"Content-Type": "application/json"
@@ -86,7 +145,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			register: async (name, surname, email, username, password) => {
                 try {
-                    const response = await fetch("https://didactic-winner-x5rrg7q5wjxjhpj44-3001.app.github.dev/api/register", {
+                    const response = await fetch("https://congenial-robot-5gvv7jpgq7wvc7vx6-3001.app.github.dev/api/register", {
                         method: "POST",
                         headers: {
                             "content-Type": "application/json"
@@ -131,7 +190,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 				
 				try {
-					const response = await fetch(`https://didactic-winner-x5rrg7q5wjxjhpj44-3001.app.github.dev/api/user/${store.user.id}`, {
+					const response = await fetch(`https://congenial-robot-5gvv7jpgq7wvc7vx6-3001.app.github.dev/api/user/${store.user.id}`, {
 						method: "PUT",
 						headers: {
 							"Content-Type": "application/json",
@@ -193,6 +252,36 @@ const getState = ({ getStore, getActions, setStore }) => {
                         title: "Oops...",
                         text: error.message,
                     });
+                    console.log(error);
+                }
+            },
+
+			createTrainingDays: async (trainingDaysData) => {
+                const store = getStore();
+                if (!store.token) {
+                    Swal.fire({ icon: "error", title: "User not logged in", text: "Please log in first" });
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`https://congenial-robot-5gvv7jpgq7wvc7vx6-3001.app.github.dev/api/training-days`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${store.token}`
+                        },
+                        body: JSON.stringify(trainingDaysData)
+                    });
+
+                    if (!response.ok) {
+                        throw await response.json();
+                    }
+
+                    const data = await response.json();
+                    Swal.fire({ icon: "success", title: "Success!", text: data.msg });
+                    return true;
+                } catch (error) {
+                    Swal.fire({ icon: "error", title: "Oops...", text: error.msg });
                     console.log(error);
                 }
             },
