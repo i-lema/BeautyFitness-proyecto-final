@@ -18,10 +18,10 @@
 }
 /* General Styles */
 .home-container {
-    min-height: 100vh; /* Full height */
+    min-height: 100vh;
     padding: 20px;
     box-sizing: border-box;
-    background-color: #343a40; /* bg-dark color */
+    background-color: #343a40;
 }
 
 .main-content {

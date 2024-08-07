@@ -99,7 +99,7 @@ const Layout = () => {
                                 <Route element={<ExercisesListPage />} path="/exercises-list/:bodyPart" />
                                 <Route element={<SingleExercisePage />} path="/exercise/:exerciseId" />
                                 {/* <Route element={<Single />} path="/single/:theid" /> */}
-                                <Route element={<Workout />} path="/workout" /> 
+                                {/* <Route element={<Workout />} path="/workout" />  */}
                                 <Route element={<WorkoutList />} path="/workoutList" /> 
                                 <Route element={<ProfileExperienceLevel  />} path="/profileExperienceLevel" />
                                 <Route element={<ProfileObjetive  />} path="/profileObjetive" />
@@ -107,7 +107,7 @@ const Layout = () => {
                                 <Route element={<TrainingDays />} path="/trainingDays" />
                                 <Route element={<DayRoutine />} path="/dayRoutine" />
                                 <Route element={<VideoWorkout />} path="/videoWorkout" />
-                                <Route element={<SuscriptionInfo />} path="/suscriptionInfo" />
+                                {/* <Route element={<SuscriptionInfo />} path="/suscriptionInfo" /> */}
                                 {/* <Route element={<Routine  />} path="/routine" />
                                 <Route path="/routine/:routineId" element={<Routine />} />
                                 <Route path="/routine/:routineId/day/:dayId" element={<Day />} />

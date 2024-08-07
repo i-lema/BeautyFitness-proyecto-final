@@ -11,43 +11,224 @@ const weiderRoutine = {
 // Define the other routines similarly...
 
 const getState = ({ getStore, getActions, setStore }) => {
-	return {
-		store: {
-			token: null,
-			message: null,
-			user: null,
-			exercises: [],
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
+    return {
+        store: {
+            token: null,
+            message: null,
+            user: null,
+            exercises: [],
+            trainingDays: null,
+            recommendedRoutine: null,
+            recommendedExercises: [],
+            routineExercises: {},
+            demo: [
+                {
+                    title: "FIRST",
+                    background: "white",
+                    initial: "white"
+                },
+                {
+                    title: "SECOND",
+                    background: "white",
+                    initial: "white"
+                }
+            ]
+        },
+        actions: {
+            setTrainingDays: async (days) => {
+				const store = getStore();
+				setStore({ trainingDays: days });
+				await getActions().recommendRoutine(days);
+
+				if (store.user && store.token) {
+					try {
+						const response = await fetch(`https://congenial-robot-5gvv7jpgq7wvc7vx6-3001.app.github.dev/api/user/${store.user.id}`, {
+							method: "PUT",
+							headers: {
+								"Content-Type": "application/json",
+								"Authorization": `Bearer ${store.token}`
+							},
+							body: JSON.stringify({ trainingDays: days })
+						});
+
+						if (!response.ok) {
+							throw await response.json();
+						}
+
+						const data = await response.json();
+						const updatedUser = { ...store.user, trainingDays: days };
+						setStore({ user: updatedUser });
+						Swal.fire({
+							icon: "success",
+							title: "Success!",
+							text: data.msg,
+						});
+					} catch (error) {
+						Swal.fire({
+							icon: "error",
+							title: "Oops...",
+							text: error.msg || "Error updating training days",
+						});
+						console.log(error);
+					}
 				}
-			]
-		},
-		actions: {
-			// Use getActions to call a function within a fuction
-			
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
-				fetchExperienceLevels();
 			},
-			// Función para cargar los niveles de experiencia desde el backend
-			fetchExperienceLevels : async () => {
-				try {
-				  const response = await fetch('https://congenial-robot-5gvv7jpgq7wvc7vx6-3001.app.github.dev/api/experience_levels')
-				  if (!response.ok) throw new Error('Error fetching experience levels');
-				  const data = await response.json();
-				  setStore({ experienceLevels: data });
-			  } catch (error) {
-				  console.error('Error fetching experience levels:', error);
-			  }
-			},
+            
+            fetchExerciseById: async (id) => {
+                const url = `https://exercisedb.p.rapidapi.com/exercises/exercise/${id}`;
+                const headers = {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                    "X-RapidAPI-Key": "453ba30c6cmsh6b25ac11c3ebdc4p1cec91jsn633f42181161",
+                    "X-RapidAPI-Host": "exercisedb.p.rapidapi.com"
+                };
+
+                try {
+                    const response = await fetch(url, { method: "GET", headers });
+                    if (!response.ok) throw new Error("Error fetching exercise");
+
+                    const exercise = await response.json();
+                    return {
+                        id: exercise.id,
+                        name: exercise.name,
+                        bodyPart: exercise.bodyPart,
+                        equipment: exercise.equipment,
+                        gifUrl: exercise.gifUrl,
+                        target: exercise.target,
+                        secondaryMuscles: exercise.secondaryMuscles || [],
+                        instructions: exercise.instructions || []
+                    };
+                } catch (error) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: error.message,
+                    });
+                    console.log(error);
+                    return null;
+                }
+            },
+
+            fetchExercisesByIds: async (ids) => {
+                const actions = getActions();
+                const exercises = await Promise.all(ids.map(id => actions.fetchExerciseById(id)));
+                return exercises.filter(exercise => exercise !== null);
+            },
+
+            getRoutineExercises: async (routine) => {
+                const days = Object.keys(routine);
+                const routineExercises = {};
+
+                for (let day of days) {
+                    const ids = routine[day];
+                    const exercises = await getActions().fetchExercisesByIds(ids);
+                    routineExercises[day] = exercises;
+                }
+
+                setStore({ routineExercises });
+            },
+
+            getWeiderRoutine: async () => {
+                const actions = getActions();
+                await actions.getRoutineExercises(weiderRoutine);
+            },
+
+            getFullBodyRoutine: async () => {
+                const actions = getActions();
+                await actions.getRoutineExercises(fullBodyRoutine);
+            },
+
+            getPushPullRoutine: async () => {
+                const actions = getActions();
+                await actions.getRoutineExercises(pushPullRoutine);
+            },
+
+            getTorsoLegRoutine: async () => {
+                const actions = getActions();
+                await actions.getRoutineExercises(torsoLegRoutine);
+            },
+
+			getRoutine: async (routineType) => {
+                switch (routineType) {
+                    case 'weider':
+                        await getActions().getWeiderRoutine();
+                        break;
+                    case 'fullBody':
+                        await getActions().getFullBodyRoutine();
+                        break;
+                    case 'pushPull':
+                        await getActions().getPushPullRoutine();
+                        break;
+                    case 'torsoLeg':
+                        await getActions().getTorsoLegRoutine();
+                        break;
+                    default:
+                        console.error('Invalid routine type');
+                }
+            },
+
+            // recommendRoutine: (days) => {
+            //     let routine;
+            //     if (days === 2 || days === 3) {
+            //         routine = "Full-body";
+            //     } else if (days === 4 || days === 5) {
+            //         routine = "Push-Pull, Torso-Pierna o Weider";
+            //     } else {
+            //         routine = "No se puede recomendar una rutina con el número de días proporcionado";
+            //     }
+            //     setStore({ recommendedRoutine: routine });
+            //     Swal.fire({
+            //         icon: "info",
+            //         title: "Recomendación de Rutina",
+            //         text: `Recomendamos una rutina: ${routine}`,
+            //     });
+            // },
+
+			recommendRoutine: async (days) => {
+                let routine;
+                let exerciseIds = [];
+                if (days === 2 || days === 3) {
+                    routine = "Full-body";
+                    exerciseIds = [
+                        "0025", "0652", "0314", "0043", "0188", "0032", "1457", "2741", "0241",
+                        "0043", "0025", "0099", "0652", "0085", "0326", "1383", "0814", "1774", "0315",
+                        "0841", "0054", "0180", "0025", "0027", "1757", "0587", "0313", "3697", "0194"
+                    ];
+                } else if (days === 4) {
+                    routine = "Weider";
+                    exerciseIds = [
+                        "0025", "0405", "0814", "0308", "0334", "0241",
+                        "0652", "0292", "0198", "0180", "3697", "2741", "0313",
+                        "0043", "0336", "0085", "0739", "0599", "1383",
+                        "1457", "0027", "0314", "0285", "0340"
+                    ];
+                } else if (days === 5) {
+                    routine = "Tree Trunk Legs(Avaliable soon)";
+                    exerciseIds = [
+                        "0025", "0814", "0405", "0378", "0652", "0489",
+                        "0043", "0743", "0599", "0117", "1383",
+                        "0652", "0027", "0292", "0076", "3697", "2741", "0314", "0334",
+                        "0032", "0054", "1409", "0043", "1383",
+                        "1457", "0178", "0025", "1749", "3697", "0652", "0076"
+                    ];
+                } else {
+                    routine = "It is not possible to recommend a routine with the number of days provided";
+                }
+                setStore({ recommendedRoutine: routine });
+
+                if (exerciseIds.length > 0) {
+                    const exercises = await Promise.all(
+                        exerciseIds.map(id => getActions().fetchExerciseById(id))
+                    );
+                    setStore({ recommendedExercises: exercises.filter(ex => ex !== null) });
+                }
+
+                Swal.fire({
+                    icon: "info",
+                    title: "Recomendación de Rutina",
+                    text: `Recomendamos una rutina: ${routine}`,
+                });
+            },
 
 			// Obtener token y usuario de localStorage y actualizar store
 			// Obtener token y usuario de localStorage y actualizar store
