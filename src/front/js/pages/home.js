@@ -35,9 +35,11 @@ export const Home = () => {
               </Link>
             </div>
             <div className="col homeClick m-2">
-              <h1 className="text-dark text-center display-4 fw-semibold">
-                Custom Workout
-              </h1>
+              <Link to="/test">
+                <h1 className="text-dark text-center display-4 fw-semibold">
+                  Custom Workout
+                </h1>
+              </Link>
             </div>
             <div className="col homeClick m-2">
               <Link to="/profile">
@@ -47,12 +49,13 @@ export const Home = () => {
               </Link>
             </div>
             <div className="col homeClick m-2">
-              <h1 className="text-dark text-center display-4 fw-semibold">
-                Exercises
-              </h1>
+              <Link to="/test2">
+                <h1 className="text-dark text-center display-4 fw-semibold">
+                  What Routine Should I Choose?
+                </h1>
+              </Link>
             </div>
           </div>
-          <TrainingDays/>
           <RecommendedRoutine/>
         </div>
       )}

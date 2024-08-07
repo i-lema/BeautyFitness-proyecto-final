@@ -33,6 +33,13 @@ import { ExercisesListPage } from "./pages/exerciseListPage";
 import { SingleExercisePage } from "./pages/singleExercisePage";
 import TrainingForm from "./pages/trainingForm";
 import TrainingDays from "./pages/trainingDays";
+import Test from "./pages/test";
+import Exercise from "./pages/exerciseDetail";
+import Test2 from "./pages/test2";
+import RoutineDisplay from "./component/routineDisplay";
+import Test3 from "./pages/test3";
+import RecommendedExercises from "./pages/recomendedExercices";
+import ExerciseComponent from "./component/exerciseComponent";
 
 //create your first component
 const Layout = () => {
@@ -78,6 +85,10 @@ const Layout = () => {
                                 <Route element={<ResetPassword />} path="/reset-password" />
                                 <Route element={<TrainingForm />} path="/training" />
                                 <Route element={<Exercices />} path="/exercices" />
+                                <Route element={<Test />} path="/test" />
+                                <Route element={<Test2 />} path="/test2" />
+                                <Route element={<Test3 />} path="/test3" />
+                                <Route element={<ExerciseComponent />} path="/test4" />
                                 <Route element={<ExercisesListPage />} path="/exercises-list/:bodyPart" />
                                 <Route element={<SingleExercisePage />} path="/exercise/:exerciseId" />
                                 {/* <Route element={<Single />} path="/single/:theid" /> */}
@@ -90,7 +101,11 @@ const Layout = () => {
                                 <Route element={<DayRoutine />} path="/dayRoutine" />
                                 <Route element={<VideoWorkout />} path="/videoWorkout" />
                                 <Route element={<SuscriptionInfo />} path="/suscriptionInfo" />
-                                <Route element={<Routine  />} path="/routine" />
+                                {/* <Route element={<Routine  />} path="/routine" />
+                                <Route path="/routine/:routineId" element={<Routine />} />
+                                <Route path="/routine/:routineId/day/:dayId" element={<Day />} />
+                                <Route path="/routine/:routineId/day/:dayId/exercise/:exerciseId" element={<Exercise />} /> */}
+                                <Route path="/routine/:routineName" component={RoutineDisplay} />
                                 <Route element={<h1>Not found!</h1>} path="*" />
                             </Routes>  
                             <Footer />
