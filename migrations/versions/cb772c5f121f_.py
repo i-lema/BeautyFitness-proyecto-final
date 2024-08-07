@@ -5,9 +5,10 @@ Revision ID: cb772c5f121f
 Revises: 
 Create Date: 2024-08-02 18:06:14.774968
 ========
-Revision ID: 11b71bfb31db
+Revision ID: badada0184a0
 Revises: 
 Create Date: 2024-08-02 17:55:58.166801
+>>>>>>>> 127ed65779d5d753c96a7f93f6c13e7f25e2d99f:migrations/versions/badada0184a0_.py
 
 """
 from alembic import op
@@ -15,7 +16,11 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
+<<<<<<<< HEAD:migrations/versions/cb772c5f121f_.py
+revision = 'cb772c5f121f'
+========
 revision = 'badada0184a0'
+>>>>>>>> 127ed65779d5d753c96a7f93f6c13e7f25e2d99f:migrations/versions/badada0184a0_.py
 down_revision = None
 branch_labels = None
 depends_on = None

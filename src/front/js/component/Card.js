@@ -13,15 +13,14 @@ export const Card = () => {
             style={{ borderRadius: "50%", width: "100px", height: "100px", objectFit: "cover", marginRight: "10px" }} 
           />
           <div className="card-body">
-            <h3 className="card-title text-center">Review title</h3>
-            <p className="card-text text-center">
+            <FontAwesomeIcon icon="fa-regular fa-star" />
+            <h3 className="card-title text-center text-dark">Review title</h3>
+            <p className="card-text text-center text-dark">
               Review body
-            </p>
-            <p className="card-text text-center">
-              Reviewer name
-            </p>
-            <p className="card-text text-center">
-              Date
+              <body>
+                <h5>Reviewer name</h5>
+               <h6>Date</h6> 
+              </body>
             </p>
           </div>
        </div>

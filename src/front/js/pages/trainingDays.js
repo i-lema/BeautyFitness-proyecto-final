@@ -1,6 +1,11 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 
+
+import React from "react";
+import { Link } from "react-router-dom";
+import "../../styles/trainingDays.css";
+
 const TrainingDays = () => {
     const { actions } = useContext(Context);
     const [days, setDays] = useState(0);
@@ -30,3 +35,4 @@ const TrainingDays = () => {
 };
 
 export default TrainingDays;
+
