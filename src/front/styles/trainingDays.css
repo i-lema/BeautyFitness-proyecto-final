@@ -10,3 +10,86 @@
 .button-container{
     justify-content: center;
 }
+/* General Styles */
+.training-days {
+    background-color: #212529; /* Dark background to match bg-dark */
+    color: #e9ecef; /* Light text color for contrast */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.training-day {
+    margin-bottom: 30px;
+}
+
+.day-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #f8f9fa; /* Light text color */
+    margin-bottom: 20px;
+    border-bottom: 2px solid #007bff; /* Blue underline for separation */
+    padding-bottom: 10px;
+}
+
+.exercises {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.exercise-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.exercise-summary-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #343a40; /* Slightly lighter dark background for cards */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s, box-shadow 0.3s;
+    overflow: hidden;
+    text-align: center;
+    padding: 10px;
+}
+
+.exercise-summary-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+.exercise-image {
+    width: 100%;
+    height: auto;
+    border-bottom: 2px solid #007bff;
+    border-radius: 10px;
+}
+
+.exercise-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #e9ecef; /* Light text color */
+    margin-top: 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    .day-title {
+        font-size: 1.5rem;
+    }
+    .exercise-title {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .day-title {
+        font-size: 1.75rem;
+    }
+    .exercise-title {
+        font-size: 1.1rem;
+    }
+}

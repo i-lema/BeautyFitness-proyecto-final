@@ -5,6 +5,8 @@ import { Context } from "../store/appContext";
 import { FullBody2 } from "./2DaysFullBody";
 import { FullBody3 } from "./3DaysFullBody";
 import { WeiderRoutine } from "./4DaysWeider";
+import { Proximamente } from "./proximamente";
+import { SelectDays } from "./selectDays";
 
 export const Choose = props => {
     const { store, actions } = useContext(Context);
@@ -27,9 +29,9 @@ export const Choose = props => {
         ) : store.trainingDays == 4 ? (
             <WeiderRoutine />
         ) : store.trainingDays == 5 ? (
-            <FullBody2 />
+            <Proximamente />
         ) : (
-            <FullBody2 />
+            <SelectDays />
         )}
     </div>
     );

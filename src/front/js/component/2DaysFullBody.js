@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
+import "../../styles/trainingDays.css"
 
 export const FullBody2 = props => {
     const { store, actions } = useContext(Context);

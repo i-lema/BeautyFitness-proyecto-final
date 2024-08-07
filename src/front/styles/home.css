@@ -16,3 +16,84 @@
     max-height: 450px;
     background-color: white;
 }
+/* General Styles */
+.home-container {
+    min-height: 100vh; /* Full height */
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #343a40; /* bg-dark color */
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.link-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 400px; /* Max width to ensure cards don't stretch too much */
+    margin: 0 auto; /* Center the grid */
+}
+
+.link-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.link-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 150px;
+    width: 100%;
+    background-color: #007bff; /* Adjust color if needed */
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.link-card:hover {
+    background-color: #0056b3; /* Adjust hover color if needed */
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+.link-title {
+    margin: 0;
+    color: #fff; /* Ensure the text is readable on dark background */
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    .link-card {
+        font-size: 1.2rem;
+        height: 120px; /* Adjust height for smaller screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .link-card {
+        font-size: 1.3rem;
+        height: 130px; /* Adjust height for medium screens */
+    }
+}
+
+@media (max-width: 992px) {
+    .link-card {
+        font-size: 1.4rem;
+        height: 140px; /* Adjust height for larger screens */
+    }
+}

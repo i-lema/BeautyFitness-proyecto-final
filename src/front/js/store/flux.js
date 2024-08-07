@@ -112,7 +112,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             fetchExercisesByIds: async (ids) => {
                 const actions = getActions();
                 const exercises = await Promise.all(ids.map(id => actions.fetchExerciseById(id)));
-                return exercises.filter(exercise => exercise !== null); // Filter out any null values from failed requests
+                return exercises.filter(exercise => exercise !== null);
             },
 
             getRoutineExercises: async (routine) => {
@@ -195,7 +195,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         "0841", "0054", "0180", "0025", "0027", "1757", "0587", "0313", "3697", "0194"
                     ];
                 } else if (days === 4) {
-                    routine = "Push/Pull";
+                    routine = "Weider";
                     exerciseIds = [
                         "0025", "0405", "0814", "0308", "0334", "0241",
                         "0652", "0292", "0198", "0180", "3697", "2741", "0313",
@@ -203,7 +203,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         "1457", "0027", "0314", "0285", "0340"
                     ];
                 } else if (days === 5) {
-                    routine = "Torso/Pierna";
+                    routine = "Tree Trunk Legs(Avaliable soon)";
                     exerciseIds = [
                         "0025", "0814", "0405", "0378", "0652", "0489",
                         "0043", "0743", "0599", "0117", "1383",
@@ -212,7 +212,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         "1457", "0178", "0025", "1749", "3697", "0652", "0076"
                     ];
                 } else {
-                    routine = "No se puede recomendar una rutina con el número de días proporcionado";
+                    routine = "It is not possible to recommend a routine with the number of days provided";
                 }
                 setStore({ recommendedRoutine: routine });
 
@@ -454,7 +454,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     "Accept": "application/json",
                     "Content-Type": "application/json",
                     "x-rapidapi-ua": "RapidAPI-Playground",
-                    "x-rapidapi-key": "e2ab8c782fmshc50fe109a9873fbp17a91fjsnf032480ff36c",
+                    "x-rapidapi-key": "453ba30c6cmsh6b25ac11c3ebdc4p1cec91jsn633f42181161",
                     "x-rapidapi-host": "exercisedb.p.rapidapi.com"
                 };
 
