@@ -1,22 +1,208 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from "react";
+import PropTypes from "prop-types";
+import { Link, useParams, useNavigate } from "react-router-dom";
+import { Context } from "../store/appContext";
 
+export const WeiderRoutine = props => {
+    const { store, actions } = useContext(Context);
+    const params = useParams();
+    const navigate = useNavigate();
+    // const weiderRoutine = {
+    //     "Día 1": ["0025", "0047", "0314", "0179", "0188", "1269", "0285", "0315", "2741", "0313", "0757", "1326"],
+    //     "Día 2": ["3418", "0652", "0841", "0027", "0180", "0193", "1319", "0861", "2616", "0327", "0061", "0194", "0591", "1767", "0814", "0241"],
+    //     "Día 3": ["0032", "0085", "0300", "1459", "1757", "0054", "0078", "0114", "0058", "0099", "0410", "0597", "1774", "1417", "0586", "3195", "0599", "0696", "0043", "1436", "0068", "1476", "0743", "1383", "0605", "0739"],
+    //     "Día 4": ["3697", "0178", "0192", "1457", "0553", "0587", "2137", "0310", "0326", "0334", "0405", "0426"]
+    // };
 
-
-export const ExerciseDetail = ({ location }) => {
-    const { id } = useParams();
-    const exercise = exercisesData[id];
-
-    if (!exercise) {
-        return <div>Exercise not found</div>;
-    }
-
-    const fullBody2 = {
-        "Día 1": ["0025", "0099", "0652", "0314", "0043", "0188", "0032", "1457", "1383", "2741", "0241"],
-        "Día 2": ["0841", "0054", "0180", "0043", "0025", "0027", "0085", "0587", "1774", "0313", "3697", "0194"]
+    const weiderRoutine = {
+        "Día 1": ["0025", "0047", "0314", "0179", "0188", "1269", "0285", "0315", "2741", "0313", "0757", "1326"],
+        "Día 2": ["3418", "0652", "0841", "0027", "0180", "0193", "1319"],
+        "Día 3": ["0032", "0085", "0054", "0058", "0099", "1774", "0043", "1383"],
+        "Día 4": ["3697", "1457", "0587"]
     };
     
     const exercisesData = {
+        "1319":{
+            "bodyPart": "back",
+            "equipment": "cable",
+            "gifUrl": "https://v2.exercisedb.io/image/aPfoDoWQIbaNfb",
+            "id": "1319",
+            "name": "cable palm rotational row",
+            "target": "upper back",
+            "secondaryMuscles": [
+                "biceps",
+                "forearms"
+            ],
+            "instructions": [
+                "Attach a handle to a cable machine at waist height.",
+                "Stand facing the machine with your feet shoulder-width apart.",
+                "Grasp the handle with an overhand grip, palms facing down.",
+                "Step back to create tension on the cable, keeping your back straight and knees slightly bent.",
+                "Pull the handle towards your body, rotating your palms to face upwards as you do so.",
+                "Squeeze your shoulder blades together at the end of the movement.",
+                "Slowly release the handle back to the starting position.",
+                "Repeat for the desired number of repetitions."
+            ]
+        },
+        "0193":{
+            "bodyPart": "back",
+            "equipment": "cable",
+            "gifUrl": "https://v2.exercisedb.io/image/YhuWrIPzpiYuga",
+            "id": "0193",
+            "name": "cable one arm straight back high row (kneeling)",
+            "target": "upper back",
+            "secondaryMuscles": [
+                "biceps",
+                "shoulders"
+            ],
+            "instructions": [
+                "Attach a handle to a cable machine at waist height.",
+                "Kneel down facing the cable machine and grab the handle with one hand.",
+                "Keep your back straight and your core engaged.",
+                "Pull the handle towards your chest, squeezing your shoulder blades together.",
+                "Pause for a moment at the top of the movement.",
+                "Slowly release the handle back to the starting position.",
+                "Repeat for the desired number of repetitions.",
+                "Switch sides and repeat the exercise with the other arm."
+            ]
+        },
+        "3418":{
+            "bodyPart": "back",
+            "equipment": "body weight",
+            "gifUrl": "https://v2.exercisedb.io/image/gJS-vGcebQOK53",
+            "id": "3418",
+            "name": "l-pull-up",
+            "target": "lats",
+            "secondaryMuscles": [
+                "biceps",
+                "forearms"
+            ],
+            "instructions": [
+                "Grab the pull-up bar with an overhand grip, slightly wider than shoulder-width apart.",
+                "Hang with your arms fully extended and your body straight.",
+                "Engage your lats and biceps to pull your body up towards the bar, keeping your elbows close to your body.",
+                "Continue pulling until your chin is above the bar.",
+                "Pause for a moment at the top, then slowly lower your body back down to the starting position.",
+                "Repeat for the desired number of repetitions."
+            ]
+        },
+        "1326":{
+            "bodyPart": "back",
+            "equipment": "body weight",
+            "gifUrl": "https://v2.exercisedb.io/image/DK66WdHKL5wLho",
+            "id": "1326",
+            "name": "chin-up",
+            "target": "lats",
+            "secondaryMuscles": [
+                "biceps",
+                "forearms"
+            ],
+            "instructions": [
+                "Hang from a pull-up bar with your palms facing towards you and your hands shoulder-width apart.",
+                "Engage your core and pull your body up towards the bar, leading with your chest.",
+                "Continue pulling until your chin is above the bar.",
+                "Pause for a moment at the top, then slowly lower your body back down to the starting position.",
+                "Repeat for the desired number of repetitions."
+            ]
+        },
+        "0757":{
+            "bodyPart": "chest",
+            "equipment": "smith machine",
+            "gifUrl": "https://v2.exercisedb.io/image/gcbwL6xb66rUSm",
+            "id": "0757",
+            "name": "smith incline bench press",
+            "target": "pectorals",
+            "secondaryMuscles": [
+                "shoulders",
+                "triceps"
+            ],
+            "instructions": [
+                "Adjust the bench to a 30-45 degree incline.",
+                "Sit on the bench with your back flat against the pad and feet firmly on the ground.",
+                "Grasp the barbell with an overhand grip slightly wider than shoulder-width apart.",
+                "Unrack the barbell and lower it slowly towards your upper chest, keeping your elbows slightly tucked in.",
+                "Pause for a moment at the bottom, then push the barbell back up to the starting position, fully extending your arms.",
+                "Repeat for the desired number of repetitions."
+            ]
+        },
+        "0315":{
+            "bodyPart": "upper arms",
+            "equipment": "dumbbell",
+            "gifUrl": "https://v2.exercisedb.io/image/KldnAbIDu6sNRz",
+            "id": "0315",
+            "name": "dumbbell incline biceps curl",
+            "target": "biceps",
+            "secondaryMuscles": [
+                "forearms"
+            ],
+            "instructions": [
+                "Sit on an incline bench with a dumbbell in each hand, palms facing forward, and arms fully extended.",
+                "Keeping your upper arms stationary, exhale and curl the weights while contracting your biceps.",
+                "Continue to raise the dumbbells until your biceps are fully contracted and the dumbbells are at shoulder level.",
+                "Hold the contracted position for a brief pause as you squeeze your biceps.",
+                "Inhale and slowly begin to lower the dumbbells back to the starting position.",
+                "Repeat for the desired number of repetitions."
+            ]
+        },
+        "0285":{
+            "bodyPart": "upper arms",
+            "equipment": "dumbbell",
+            "gifUrl": "https://v2.exercisedb.io/image/DEsAWr0DKgz50E",
+            "id": "0285",
+            "name": "dumbbell alternate biceps curl",
+            "target": "biceps",
+            "secondaryMuscles": [
+                "forearms"
+            ],
+            "instructions": [
+                "Stand up straight with a dumbbell in each hand, palms facing forward and arms fully extended.",
+                "Keeping your upper arms stationary, exhale and curl the weights while contracting your biceps.",
+                "Continue to raise the dumbbells until your biceps are fully contracted and the dumbbells are at shoulder level.",
+                "Hold the contracted position for a brief pause as you squeeze your biceps.",
+                "Inhale and slowly begin to lower the dumbbells back to the starting position.",
+                "Repeat for the desired number of repetitions, alternating arms."
+            ]
+        },
+        "1269":{
+            "bodyPart": "chest",
+            "equipment": "cable",
+            "gifUrl": "https://v2.exercisedb.io/image/Ctr0w2EOcfpP29",
+            "id": "1269",
+            "name": "cable standing up straight crossovers",
+            "target": "pectorals",
+            "secondaryMuscles": [
+                "deltoids",
+                "triceps"
+            ],
+            "instructions": [
+                "Stand in the middle of a cable machine with your feet shoulder-width apart.",
+                "Hold the handles of the cables with your palms facing down and your arms extended straight out to the sides.",
+                "Keeping your arms straight, bring your hands together in front of your body, crossing them over each other.",
+                "Pause for a moment, then slowly return to the starting position, keeping your arms extended.",
+                "Repeat for the desired number of repetitions."
+            ]
+        },
+        "0179":{
+            "bodyPart": "chest",
+            "equipment": "cable",
+            "gifUrl": "https://v2.exercisedb.io/image/VzwUszNEMMTt6L",
+            "id": "0179",
+            "name": "cable low fly",
+            "target": "pectorals",
+            "secondaryMuscles": [
+                "deltoids",
+                "triceps"
+            ],
+            "instructions": [
+                "Attach the handles to the low pulleys of a cable machine and select an appropriate weight.",
+                "Stand in the middle of the machine with your feet shoulder-width apart and a slight bend in your knees.",
+                "Grasp the handles with an overhand grip and extend your arms out to the sides, keeping a slight bend in your elbows.",
+                "Maintaining control, slowly bring your arms forward in a sweeping motion, crossing them in front of your body.",
+                "Pause for a moment at the peak of the movement, feeling the stretch in your chest muscles.",
+                "Reverse the motion and slowly return your arms to the starting position, keeping tension on your chest muscles throughout.",
+                "Repeat for the desired number of repetitions."
+            ]
+        },
         "0025": {
             "bodyPart": "chest",
             "equipment": "barbell",
@@ -92,30 +278,6 @@ export const ExerciseDetail = ({ location }) => {
                 "Hold a dumbbell in each hand, palms facing forward, and lift them to shoulder height.",
                 "Slowly lower the dumbbells to the sides of your chest, keeping your elbows at a 90-degree angle.",
                 "Push the dumbbells back up to the starting position, fully extending your arms.",
-                "Repeat for the desired number of repetitions."
-            ]
-        },
-        "0043":{
-            "bodyPart": "upper legs",
-            "equipment": "barbell",
-            "gifUrl": "https://v2.exercisedb.io/image/tfrJqH0Q5PpCGC",
-            "id": "0043",
-            "name": "barbell full squat",
-            "target": "glutes",
-            "secondaryMuscles": [
-                "quadriceps",
-                "hamstrings",
-                "calves",
-                "core"
-            ],
-            "instructions": [
-                "Stand with your feet shoulder-width apart, toes slightly turned out.",
-                "Hold the barbell across your upper back, resting it on your traps or rear delts.",
-                "Engage your core and keep your chest up as you begin to lower your body down.",
-                "Bend at the knees and hips, pushing your hips back and down as if sitting into a chair.",
-                "Lower yourself until your thighs are parallel to the ground or slightly below.",
-                "Keep your knees in line with your toes and your weight in your heels.",
-                "Drive through your heels to stand back up, extending your hips and knees.",
                 "Repeat for the desired number of repetitions."
             ]
         },
@@ -321,27 +483,6 @@ export const ExerciseDetail = ({ location }) => {
                 "Repeat for the desired number of repetitions."
             ]
         },
-        "0025":{
-            "bodyPart": "chest",
-            "equipment": "barbell",
-            "gifUrl": "https://v2.exercisedb.io/image/qm0tg2tnaXv490",
-            "id": "0025",
-            "name": "barbell bench press",
-            "target": "pectorals",
-            "secondaryMuscles": [
-                "triceps",
-                "shoulders"
-            ],
-            "instructions": [
-                "Lie flat on a bench with your feet flat on the ground and your back pressed against the bench.",
-                "Grasp the barbell with an overhand grip slightly wider than shoulder-width apart.",
-                "Lift the barbell off the rack and hold it directly above your chest with your arms fully extended.",
-                "Lower the barbell slowly towards your chest, keeping your elbows tucked in.",
-                "Pause for a moment when the barbell touches your chest.",
-                "Push the barbell back up to the starting position by extending your arms.",
-                "Repeat for the desired number of repetitions."
-            ]
-        },
         "0027":{
             "bodyPart": "back",
             "equipment": "barbell",
@@ -485,22 +626,68 @@ export const ExerciseDetail = ({ location }) => {
                 "Repeat for the desired number of repetitions."
             ]
         }
-    
-    };
 
-    return (
-        <div className="exercise-detail">
-            <h1>{exercise.name}</h1>
-            <img src={exercise.gifUrl} alt={exercise.name} />
-            <p><strong>Body Part:</strong> {exercise.bodyPart}</p>
-            <p><strong>Equipment:</strong> {exercise.equipment}</p>
-            <p><strong>Target:</strong> {exercise.target}</p>
-            <p><strong>Secondary Muscles:</strong> {exercise.secondaryMuscles.join(', ')}</p>
-            <ol>
-                {exercise.instructions.map((instruction, index) => (
-                    <li key={index}>{instruction}</li>
-                ))}
-            </ol>
-        </div>
-    );
-};
+    };
+//     const TrainingDays = ({ weiderRoutine }) => (
+//         <div className="training-days">
+//             {Object.keys(weiderRoutine).map(day => (
+//                 <div key={day} className="training-day">
+//                     <h1>{day}</h1>
+//                     <div className="exercises">
+//                         {weiderRoutine[day].map(exerciseId => (
+//                             <Link to={`/exercise/${exerciseId}`} key={exerciseId}>
+//                                 <div className="exercise-summary-card">
+//                                     <h3>{exercisesData[exerciseId].name}</h3>
+//                                     <img src={exercisesData[exerciseId].gifUrl} alt={exercisesData[exerciseId].name} />
+//                                 </div>
+//                             </Link>
+//                         ))}
+//                     </div>
+//                 </div>
+//             ))}
+//         </div>
+//     );
+
+//     return (
+//         <div>
+//             <TrainingDays weiderRoutine={weiderRoutine} />
+//         </div>
+//     );
+// }
+
+const TrainingDays = ({ weiderRoutine }) => (
+    <div className="training-days">
+        {Object.keys(weiderRoutine).map(day => (
+            <div key={day} className="training-day">
+                <h1>{day}</h1>
+                <div className="exercises">
+                    {weiderRoutine[day].map(exerciseId => {
+                        const exercise = exercisesData[exerciseId];
+                        if (!exercise) {
+                            return (
+                                <div key={exerciseId} className="exercise-summary-card">
+                                    <h3>Exercise not found</h3>
+                                </div>
+                            );
+                        }
+                        return (
+                            <Link to={`/exercise/${exerciseId}`} key={exerciseId}>
+                                <div className="exercise-summary-card">
+                                    <h3>{exercise.name}</h3>
+                                    <img src={exercise.gifUrl} alt={exercise.name} />
+                                </div>
+                            </Link>
+                        );
+                    })}
+                </div>
+            </div>
+        ))}
+    </div>
+);
+
+return (
+    <div>
+        <TrainingDays weiderRoutine={weiderRoutine} />
+    </div>
+);
+}

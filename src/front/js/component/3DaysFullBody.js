@@ -1,40 +1,97 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from "react";
+import PropTypes from "prop-types";
+import { Link, useParams, useNavigate } from "react-router-dom";
+import { Context } from "../store/appContext";
 
+export const FullBody3 = props => {
+    const { store, actions } = useContext(Context);
+    const params = useParams();
+    const navigate = useNavigate();
 
-
-export const ExerciseDetail = ({ location }) => {
-    const { id } = useParams();
-    const exercise = exercisesData[id];
-
-    if (!exercise) {
-        return <div>Exercise not found</div>;
-    }
-
-    const fullBody2 = {
-        "Día 1": ["0025", "0099", "0652", "0314", "0043", "0188", "0032", "1457", "1383", "2741", "0241"],
-        "Día 2": ["0841", "0054", "0180", "0043", "0025", "0027", "0085", "0587", "1774", "0313", "3697", "0194"]
+    const fullBody3 = {
+        "Día 1": ["0025", "0652", "0314", "0043", "0188", "0032", "1457", "2741", "0241"],
+        "Día 2": ["0043", "0025", "0099", "0652", "0085", "0326", "1383", "0814", "1774", "0315"],
+        "Día 3": ["0841", "0054", "0180", "0025", "0027", "1757", "0587", "0313", "3697", "0194"]
     };
-    
+
     const exercisesData = {
-        "0025": {
-            "bodyPart": "chest",
-            "equipment": "barbell",
-            "gifUrl": "https://v2.exercisedb.io/image/qm0tg2tnaXv490",
-            "id": "0025",
-            "name": "barbell bench press",
-            "target": "pectorals",
-            "secondaryMuscles": ["triceps", "shoulders"],
+        "1757":{
+            "bodyPart": "upper legs",
+            "equipment": "dumbbell",
+            "gifUrl": "https://v2.exercisedb.io/image/Gpm15flPk7Kgtj",
+            "id": "1757",
+            "name": "dumbbell single leg deadlift",
+            "target": "glutes",
+            "secondaryMuscles": [
+                "hamstrings",
+                "lower back"
+            ],
             "instructions": [
-                "Lie flat on a bench with your feet flat on the ground and your back pressed against the bench.",
-                "Grasp the barbell with an overhand grip slightly wider than shoulder-width apart.",
-                "Lift the barbell off the rack and hold it directly above your chest with your arms fully extended.",
-                "Lower the barbell slowly towards your chest, keeping your elbows tucked in.",
-                "Pause for a moment when the barbell touches your chest.",
-                "Push the barbell back up to the starting position by extending your arms.",
+                "Stand with your feet hip-width apart, holding a dumbbell in your right hand.",
+                "Shift your weight onto your left leg and lift your right foot slightly off the ground.",
+                "Keeping your back straight, hinge forward at the hips and lower the dumbbell towards the ground.",
+                "At the same time, extend your right leg straight behind you, maintaining a slight bend in your left knee.",
+                "Lower the dumbbell until your torso and right leg are parallel to the ground.",
+                "Pause for a moment, then engage your glutes and hamstrings to return to the starting position.",
+                "Repeat for the desired number of repetitions, then switch sides."
+            ]
+        },
+        "0315":{
+            "bodyPart": "upper arms",
+            "equipment": "dumbbell",
+            "gifUrl": "https://v2.exercisedb.io/image/KldnAbIDu6sNRz",
+            "id": "0315",
+            "name": "dumbbell incline biceps curl",
+            "target": "biceps",
+            "secondaryMuscles": [
+                "forearms"
+            ],
+            "instructions": [
+                "Sit on an incline bench with a dumbbell in each hand, palms facing forward, and arms fully extended.",
+                "Keeping your upper arms stationary, exhale and curl the weights while contracting your biceps.",
+                "Continue to raise the dumbbells until your biceps are fully contracted and the dumbbells are at shoulder level.",
+                "Hold the contracted position for a brief pause as you squeeze your biceps.",
+                "Inhale and slowly begin to lower the dumbbells back to the starting position.",
                 "Repeat for the desired number of repetitions."
             ]
         },
+        "0814":{
+            "bodyPart": "upper arms",
+            "equipment": "body weight",
+            "gifUrl": "https://v2.exercisedb.io/image/yxMtzc9rqN6VaE",
+            "id": "0814",
+            "name": "triceps dip",
+            "target": "triceps",
+            "secondaryMuscles": [
+                "chest",
+                "shoulders"
+            ],
+            "instructions": [
+                "Sit on the edge of a bench or chair with your hands gripping the edge, fingers pointing forward.",
+                "Slide your butt off the bench, supporting your weight with your hands.",
+                "Bend your elbows and lower your body towards the ground, keeping your back close to the bench.",
+                "Pause for a moment at the bottom, then push yourself back up to the starting position.",
+                "Repeat for the desired number of repetitions."
+            ]
+        },
+        // "0025": {
+        //     "bodyPart": "chest",
+        //     "equipment": "barbell",
+        //     "gifUrl": "https://v2.exercisedb.io/image/qm0tg2tnaXv490",
+        //     "id": "0025",
+        //     "name": "barbell bench press",
+        //     "target": "pectorals",
+        //     "secondaryMuscles": ["triceps", "shoulders"],
+        //     "instructions": [
+        //         "Lie flat on a bench with your feet flat on the ground and your back pressed against the bench.",
+        //         "Grasp the barbell with an overhand grip slightly wider than shoulder-width apart.",
+        //         "Lift the barbell off the rack and hold it directly above your chest with your arms fully extended.",
+        //         "Lower the barbell slowly towards your chest, keeping your elbows tucked in.",
+        //         "Pause for a moment when the barbell touches your chest.",
+        //         "Push the barbell back up to the starting position by extending your arms.",
+        //         "Repeat for the desired number of repetitions."
+        //     ]
+        // },
         "0099":{
             "bodyPart": "upper legs",
             "equipment": "barbell",
@@ -297,30 +354,30 @@ export const ExerciseDetail = ({ location }) => {
                 "Repeat for the desired number of repetitions."
             ]
         },
-        "0043":{
-            "bodyPart": "upper legs",
-            "equipment": "barbell",
-            "gifUrl": "https://v2.exercisedb.io/image/tfrJqH0Q5PpCGC",
-            "id": "0043",
-            "name": "barbell full squat",
-            "target": "glutes",
-            "secondaryMuscles": [
-                "quadriceps",
-                "hamstrings",
-                "calves",
-                "core"
-            ],
-            "instructions": [
-                "Stand with your feet shoulder-width apart, toes slightly turned out.",
-                "Hold the barbell across your upper back, resting it on your traps or rear delts.",
-                "Engage your core and keep your chest up as you begin to lower your body down.",
-                "Bend at the knees and hips, pushing your hips back and down as if sitting into a chair.",
-                "Lower yourself until your thighs are parallel to the ground or slightly below.",
-                "Keep your knees in line with your toes and your weight in your heels.",
-                "Drive through your heels to stand back up, extending your hips and knees.",
-                "Repeat for the desired number of repetitions."
-            ]
-        },
+        // "0043":{
+        //     "bodyPart": "upper legs",
+        //     "equipment": "barbell",
+        //     "gifUrl": "https://v2.exercisedb.io/image/tfrJqH0Q5PpCGC",
+        //     "id": "0043",
+        //     "name": "barbell full squat",
+        //     "target": "glutes",
+        //     "secondaryMuscles": [
+        //         "quadriceps",
+        //         "hamstrings",
+        //         "calves",
+        //         "core"
+        //     ],
+        //     "instructions": [
+        //         "Stand with your feet shoulder-width apart, toes slightly turned out.",
+        //         "Hold the barbell across your upper back, resting it on your traps or rear delts.",
+        //         "Engage your core and keep your chest up as you begin to lower your body down.",
+        //         "Bend at the knees and hips, pushing your hips back and down as if sitting into a chair.",
+        //         "Lower yourself until your thighs are parallel to the ground or slightly below.",
+        //         "Keep your knees in line with your toes and your weight in your heels.",
+        //         "Drive through your heels to stand back up, extending your hips and knees.",
+        //         "Repeat for the desired number of repetitions."
+        //     ]
+        // },
         "0025":{
             "bodyPart": "chest",
             "equipment": "barbell",
@@ -485,22 +542,36 @@ export const ExerciseDetail = ({ location }) => {
                 "Repeat for the desired number of repetitions."
             ]
         }
-    
     };
 
+    const TrainingDays = ({ fullBody3 }) => (
+        <div className="training-days">
+            {Object.keys(fullBody3).map(day => (
+                <div key={day} className="training-day">
+                    <h1>{day}</h1>
+                    <div className="exercises">
+                        {fullBody3[day].map(exerciseId => (
+                            <Link to={`/exercise/${exerciseId}`} key={exerciseId}>
+                                <div className="exercise-summary-card">
+                                    <h3>{exercisesData[exerciseId]?.name}</h3>
+                                    <img src={exercisesData[exerciseId]?.gifUrl} alt={exercisesData[exerciseId]?.name} />
+                                </div>
+                            </Link>
+                        ))}
+                    </div>
+                </div>
+            ))}
+        </div>
+    );
+
     return (
-        <div className="exercise-detail">
-            <h1>{exercise.name}</h1>
-            <img src={exercise.gifUrl} alt={exercise.name} />
-            <p><strong>Body Part:</strong> {exercise.bodyPart}</p>
-            <p><strong>Equipment:</strong> {exercise.equipment}</p>
-            <p><strong>Target:</strong> {exercise.target}</p>
-            <p><strong>Secondary Muscles:</strong> {exercise.secondaryMuscles.join(', ')}</p>
-            <ol>
-                {exercise.instructions.map((instruction, index) => (
-                    <li key={index}>{instruction}</li>
-                ))}
-            </ol>
+        <div className="full-body3">
+            <TrainingDays fullBody3={fullBody3} />
         </div>
     );
 };
+
+FullBody3.propTypes = {
+    // Define prop types if needed
+};
+

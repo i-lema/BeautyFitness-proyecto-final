@@ -1,16 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from "react";
+import PropTypes from "prop-types";
+import { Link, useParams, useNavigate } from "react-router-dom";
+import { Context } from "../store/appContext";
 
-
-
-export const ExerciseDetail = ({ location }) => {
-    const { id } = useParams();
-    const exercise = exercisesData[id];
-
-    if (!exercise) {
-        return <div>Exercise not found</div>;
-    }
-
+export const FullBody2 = props => {
+    const { store, actions } = useContext(Context);
+    const params = useParams();
+    const navigate = useNavigate();
     const fullBody2 = {
         "Día 1": ["0025", "0099", "0652", "0314", "0043", "0188", "0032", "1457", "1383", "2741", "0241"],
         "Día 2": ["0841", "0054", "0180", "0043", "0025", "0027", "0085", "0587", "1774", "0313", "3697", "0194"]
@@ -485,22 +481,31 @@ export const ExerciseDetail = ({ location }) => {
                 "Repeat for the desired number of repetitions."
             ]
         }
-    
-    };
 
-    return (
-        <div className="exercise-detail">
-            <h1>{exercise.name}</h1>
-            <img src={exercise.gifUrl} alt={exercise.name} />
-            <p><strong>Body Part:</strong> {exercise.bodyPart}</p>
-            <p><strong>Equipment:</strong> {exercise.equipment}</p>
-            <p><strong>Target:</strong> {exercise.target}</p>
-            <p><strong>Secondary Muscles:</strong> {exercise.secondaryMuscles.join(', ')}</p>
-            <ol>
-                {exercise.instructions.map((instruction, index) => (
-                    <li key={index}>{instruction}</li>
-                ))}
-            </ol>
+    };
+    const TrainingDays = ({ fullBody2 }) => (
+        <div className="training-days">
+            {Object.keys(fullBody2).map(day => (
+                <div key={day} className="training-day">
+                    <h1>{day}</h1>
+                    <div className="exercises">
+                        {fullBody2[day].map(exerciseId => (
+                            <Link to={`/exercise/${exerciseId}`} key={exerciseId}>
+                                <div className="exercise-summary-card">
+                                    <h3>{exercisesData[exerciseId].name}</h3>
+                                    <img src={exercisesData[exerciseId].gifUrl} alt={exercisesData[exerciseId].name} />
+                                </div>
+                            </Link>
+                        ))}
+                    </div>
+                </div>
+            ))}
         </div>
     );
-};
+
+    return (
+        <div>
+            <TrainingDays fullBody2={fullBody2} />
+        </div>
+    );
+}

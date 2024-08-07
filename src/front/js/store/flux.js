@@ -35,12 +35,51 @@ const getState = ({ getStore, getActions, setStore }) => {
             ]
         },
         actions: {
+            setTrainingDays: async (days) => {
+				const store = getStore();
+				setStore({ trainingDays: days });
+				await getActions().recommendRoutine(days);
+
+				if (store.user && store.token) {
+					try {
+						const response = await fetch(`https://congenial-robot-5gvv7jpgq7wvc7vx6-3001.app.github.dev/api/user/${store.user.id}`, {
+							method: "PUT",
+							headers: {
+								"Content-Type": "application/json",
+								"Authorization": `Bearer ${store.token}`
+							},
+							body: JSON.stringify({ trainingDays: days })
+						});
+
+						if (!response.ok) {
+							throw await response.json();
+						}
+
+						const data = await response.json();
+						const updatedUser = { ...store.user, trainingDays: days };
+						setStore({ user: updatedUser });
+						Swal.fire({
+							icon: "success",
+							title: "Success!",
+							text: data.msg,
+						});
+					} catch (error) {
+						Swal.fire({
+							icon: "error",
+							title: "Oops...",
+							text: error.msg || "Error updating training days",
+						});
+						console.log(error);
+					}
+				}
+			},
+            
             fetchExerciseById: async (id) => {
                 const url = `https://exercisedb.p.rapidapi.com/exercises/exercise/${id}`;
                 const headers = {
                     "Accept": "application/json",
                     "Content-Type": "application/json",
-                    "X-RapidAPI-Key": "e2ab8c782fmshc50fe109a9873fbp17a91fjsnf032480ff36c",
+                    "X-RapidAPI-Key": "453ba30c6cmsh6b25ac11c3ebdc4p1cec91jsn633f42181161",
                     "X-RapidAPI-Host": "exercisedb.p.rapidapi.com"
                 };
 

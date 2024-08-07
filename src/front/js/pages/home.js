@@ -35,7 +35,8 @@ export const Home = () => {
               </Link>
             </div>
             <div className="col homeClick m-2">
-              <Link to="/test">
+              {/* <Link to="/test"> */}
+              <Link to="/test5">
                 <h1 className="text-dark text-center display-4 fw-semibold">
                   Custom Workout
                 </h1>
