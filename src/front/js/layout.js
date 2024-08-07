@@ -16,13 +16,13 @@ import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { UpdateProfile } from "./pages/updateProfile";
 
-import Profile from"./pages/profile";
+import {Profile} from"./pages/profile";
 import {Single} from "./pages/single"; // Importa el componente Single
 import Workout from "./pages/workout"; // Importa el componente Workout
 import WorkoutList from "./pages/workoutList"; // Importa el componente WorkoutList
 import ProfileExperienceLevel from"./pages/profileExperienceLevel";
 import ProfileObjetive from "./pages/profileObjetive";
-import TrainingDays from "./pages/trainingDays";
+
 import Routine from "./pages/routine";
 import SuscriptionInfo from "./pages/suscriptionInfo";
 import VideoWorkout from "./pages/videoWorkout";
@@ -32,6 +32,20 @@ import { Exercices } from "./pages/exercices";
 import { ExercisesListPage } from "./pages/exerciseListPage";
 import { SingleExercisePage } from "./pages/singleExercisePage";
 import TrainingForm from "./pages/trainingForm";
+import TrainingDays from "./pages/trainingDays";
+import Test from "./pages/test";
+import Test2 from "./pages/test2";
+import RoutineDisplay from "./component/routineDisplay";
+import Test3 from "./pages/test3";
+import RecommendedExercises from "./pages/recomendedExercices";
+import ExerciseComponent from "./component/exerciseComponent";
+import { FullBody2 } from "./component/2DaysFullBody";
+import {ExerciseDetail} from "./pages/exerciseDetail";
+import { Exercise } from "./pages/exercise";
+import ExerciseDetails from "./pages/exerciseDetails";
+import { Choose } from "./component/routinePlaning";
+import { FullBody3 } from "./component/3DaysFullBody";
+import { WeiderRoutine } from "./component/4DaysWeider";
 
 //create your first component
 const Layout = () => {
@@ -77,6 +91,12 @@ const Layout = () => {
                                 <Route element={<ResetPassword />} path="/reset-password" />
                                 <Route element={<TrainingForm />} path="/training" />
                                 <Route element={<Exercices />} path="/exercices" />
+                                <Route element={<Test />} path="/test" />
+                                <Route element={<Test2 />} path="/test2" />
+                                <Route element={<Test3 />} path="/test3" />
+                                <Route path="/exercise/:exerciseId" element={<ExerciseDetails />} />
+                                <Route element={<WeiderRoutine />} path="/test4" />
+                                <Route element={<Choose />} path="/test5" />
                                 <Route element={<ExercisesListPage />} path="/exercises-list/:bodyPart" />
                                 <Route element={<SingleExercisePage />} path="/exercise/:exerciseId" />
                                 {/* <Route element={<Single />} path="/single/:theid" /> */}
@@ -89,7 +109,11 @@ const Layout = () => {
                                 <Route element={<DayRoutine />} path="/dayRoutine" />
                                 <Route element={<VideoWorkout />} path="/videoWorkout" />
                                 <Route element={<SuscriptionInfo />} path="/suscriptionInfo" />
-                                <Route element={<Routine  />} path="/routine" />
+                                {/* <Route element={<Routine  />} path="/routine" />
+                                <Route path="/routine/:routineId" element={<Routine />} />
+                                <Route path="/routine/:routineId/day/:dayId" element={<Day />} />
+                                <Route path="/routine/:routineId/day/:dayId/exercise/:exerciseId" element={<Exercise />} /> */}
+                                <Route path="/routine/:routineName" component={RoutineDisplay} />
                                 <Route element={<h1>Not found!</h1>} path="*" />
                             </Routes>  
                             <Footer />

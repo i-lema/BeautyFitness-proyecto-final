@@ -1,0 +1,21 @@
+.text-success {
+    color: green;
+}
+
+.text-danger {
+    color: red;
+}
+
+.password-validator ul {
+    list-style: none;
+    padding: 0;
+}
+
+.password-validator li {
+    display: flex;
+    align-items: center;
+}
+
+.password-validator li i {
+    margin-right: 10px;
+}
